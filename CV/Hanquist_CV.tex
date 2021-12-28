@@ -1,0 +1,606 @@
+\documentclass[12pt,letterpaper,colorlinks,linkcolor=true]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+
+
+\usepackage{comment}
+\usepackage{color}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\definecolor{grey1}{rgb}{0.45,0.45,0.45}% grey
+%\usepackage{enumitem}
+
+% moderncv themes
+\moderncvstyle{classic}                             % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+%\moderncvstyle{banking}
+%\setmainfont{Times New Roman}
+\moderncvcolor{grey}                               % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+\usepackage{fontspec} %loads fontspec
+\setmainfont{Times New Roman}
+
+%\usepackage[13pt]{extsizes}
+
+% adjust the page margins
+\usepackage[margin=1in]{geometry}
+%\setlength{\hintscolumnwidth}{3cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+% personal data
+\name{Kyle M.}{Hanquist}
+\address{N613 AME Building}{1130 N. Mountain Ave.}{Tucson, AZ 85721}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+\phone{~(520)~621~2208}                   % optional, remove / comment the line if not wanted; the optional "type" 
+\email{hanquist@arizona.edu}                               % optional, remove / comment the line if not wanted
+\homepage{chanl.arizona.edu}                         % optional, remove / comment the line if not wanted
+\extrainfo{US Citizen / SECRET Level DoD Clearance}
+
+\newcommand{\cvdoublecolumn}[2]{%
+  \cvitem[0.75em]{}{%
+    \begin{minipage}[t]{\listdoubleitemcolumnwidth}#1\end{minipage}%
+    \hfill%
+    \begin{minipage}[t]{\listdoubleitemcolumnwidth}#2\end{minipage}%
+    }%
+}
+
+% usage: \cvreference{name}{address line 1}{address line 2}{address line 3}{address line 4}{e-mail address}{phone number}
+% Everything but the name is optional
+% If \addresssymbol, \emailsymbol or \phonesymbol are specified, they will be used.
+% (Per default, \addresssymbol isn't specified, the other two are specified.)
+% If you don't like the symbols, remove them from the following code, including the tilde ~ (space).
+
+\newcommand{\cvreference}[7]{%
+    \textbf{#1}\newline% Name
+    \ifthenelse{\equal{#2}{}}{}{\addresssymbol~#2\newline}%
+    \ifthenelse{\equal{#3}{}}{}{#3\newline}%
+    \ifthenelse{\equal{#4}{}}{}{#4\newline}%
+    \ifthenelse{\equal{#5}{}}{}{#5\newline}%
+    \ifthenelse{\equal{#6}{}}{}{\emailsymbol~\texttt{#6}\newline}%
+    \ifthenelse{\equal{#7}{}}{}{\phonesymbol~#7}}
+
+
+% to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
+\makeatletter
+\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+\makeatother
+%\renewcommand*{\bibliographyitemlabel}{[\arabic{enumiv}]}% CONSIDER REPLACING THE ABOVE BY THIS
+
+% Remove brackets, e.g. [1], in bibliography and replace with just 1
+\makeatletter
+\renewcommand\@biblabel[1]{#1}
+\makeatother
+
+\usepackage[backend=biber,style=numeric,defernumbers=true,sorting=ydnt,maxbibnames=99]{biblatex}
+\addbibresource{chanl.bib}
+
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldsource=author,
+            match=Hanquist,
+            final]
+      \step[fieldset=keywords, fieldvalue=own]
+    }
+  }
+}
+
+\newcommand{\makeauthorbold}[1]{%
+  \DeclareNameFormat{author}{%
+    \ifthenelse{\value{listcount}=1}
+    {%
+      {\expandafter\ifstrequal\expandafter{\namepartfamily}{#1}{\mkbibbold{\namepartfamily\addcomma\addspace \namepartgiveni}}{\namepartfamily\addcomma\addspace \namepartgiveni}}
+      %
+    }{\ifnumless{\value{listcount}}{\value{liststop}}
+        {\expandafter\ifstrequal\expandafter{\namepartfamily}{#1}{\mkbibbold{\addcomma\addspace \namepartfamily\addcomma\addspace \namepartgiveni}}{\addcomma\addspace \namepartfamily\addcomma\addspace \namepartgiveni}}
+        {\expandafter\ifstrequal\expandafter{\namepartfamily}{#1}{\mkbibbold{\addcomma\addspace \namepartfamily\addcomma\addspace \namepartgiveni\addcomma\isdot}}{\addcomma\addspace \namepartfamily\addcomma\addspace \namepartgiveni\addcomma\isdot}}%
+      }
+    \ifthenelse{\value{listcount}<\value{liststop}}
+    {\addcomma\space}
+  }
+}
+\makeauthorbold{Hanquist}
+
+% bibliography with mutiple entries
+%\usepackage[resetlabels]{multibib}
+
+% Below has Journal, Conference, Talks headers in grey1 color
+%\newcites{journ,conf,talk}{{\Large \textcolor{grey1}{Journal}} \vspace{.2cm},{\Large \textcolor{grey1}{Conference}} \vspace{.2cm}, {\Large \textcolor{grey1}{Talks}} \vspace{.2cm}}
+
+% Below has Journal, Conference, Talks headers in default color of headers (e.g. blue)
+%\newcites{mypapers_journ,mypapers_conf}{{\Large Journal} \vspace{.2cm},{\Large Conference} \vspace{.2cm}, {\Large Presentations} \vspace{.2cm}}
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+
+\definecolor{links}{HTML}{1E5288}
+\hypersetup{urlcolor=links}
+
+\pagestyle{fancy}
+\rfoot{Page \thepage~of \pageref{LastPage}}
+\lfoot{Last updated \today.}
+
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+
+
+\section{Education}
+\cventry{2012--2017}{Ph.D., Aerospace Engineering}{University of Michigan}{Ann Arbor, MI}{}{\normalsize Areas of Study: Nonequilibrium Flows/Computational Fluid and Plasma Dynamics/Hypersonic Vehicles}% \\
+%Dissertation: Finite Element Methods for Optimal Output Prediction \\
+%Advisor: Krzysztof J. Fidkowski}  % arguments 3 to 6 can be left empty
+\vspace{0.4cm}
+
+\cventry{2012--2015}{M.S.E., Aerospace Engineering}{University of Michigan}{Ann Arbor, MI}{}{\normalsize Area of Study: Fluid Dynamics \\ \textit{Relevant Coursework}: Compressible Flow, Computational Fluid Dynamics, Turbulent Flow, Molecular Gas Dynamics, Viscous Flow, Plasma Physics, Teaching Engineering, Advanced Aerodynamics} 
+% \\ \textit{Certifications}: Science, Technology, and Public Policy Certificate from Gerald Ford School of Public Policy (incomplete)}% \\
+\vspace{0.4cm}
+
+\cventry{2008--2012}{B.S.E., Mechanical Engineering}{University of Nebraska}{Lincoln, NE}{}{\normalsize Distinction and Honors \\ \textit{Relevant Coursework}: Computational Heat Transfer, Thermal Fluids Lab, Dynamics and Control, Heat Transfer, MATLAB, CAD, Thermal Systems and Design, Fluid Mechanics, Thermodynamics, Materials Science \\ \textit{Certifications}: Passed Fundamentals of Engineering Exam}
+
+\section{Professional and Research Experience}
+\vspace{.1cm}
+
+\cventry{2019-Present}{Assistant Professor}{Department of Aerospace \& Mechanical Engineering}{University of Arizona}{Tucson, AZ}{
+\vspace{-.2 cm}
+\begin{itemize}
+\setlength\itemsep{.2cm} \normalsize 
+  %\item Research Fellow in the Nonequilibrium Gas and Plasma Dynamics Laboratory in the Aerospace Engineering department.
+  \item Principal Investigator of the \href{chanl.arizona.edu}{Computational Hypersonics and Nonequilibrium Laboratory}, which is active in development and application of physical models and numerical methods for simulation of complex gas and plasma flows.
+  \item Founding faculty member of \href{https://hypersonics.arizona.edu}{Arizona Research Center for Hypersonics}.
+\end{itemize}
+}
+\vspace{.25cm}
+
+\cventry{2020}{Summer Faculty Fellow}{Air Force Research Laboratory}{Wright Patterson Air Force Base, OH}{}{\normalsize 
+\vspace{-.2 cm}
+\begin{itemize}
+\setlength\itemsep{.2cm}
+  %\item Research Fellow in the Nonequilibrium Gas and Plasma Dynamics Laboratory in the Aerospace Engineering department.
+  \item Completed Summer Faculty Fellowship on \textit{Detailed Investigation of Nonequilibrium Effects on Aero-Optics in Hypersonic Flows}. Advisor: Eswar Josyula.
+\end{itemize}
+}
+\vspace{.25cm}
+
+\cventry{2017-2019}{Research Fellow}{Department of Aerospace Engineering}{University of Michigan}{Ann Arbor, MI}{\normalsize 
+\vspace{-.2 cm}
+\begin{itemize}
+\setlength\itemsep{.2cm}
+  %\item Research Fellow in the Nonequilibrium Gas and Plasma Dynamics Laboratory in the Aerospace Engineering department.
+  \item Developed and validated models for computational fluid and plasma dynamics and material response to study the hypersonic flight aerothermodynamic environment. 
+  \item Developed high-order aerothermochemistry models for air (e.g. oxygen) including state-to-state, electronic master equation, and nonequilibrium modeling and collaborated with Stanford University to compare to experimental data.
+  \item Developed optimization scheme for aerothermal design of hypersonic vehicles.
+  \item Mentored undergraduate and master students in areas of computational modeling of nonequilibrium gas and plasma dynamic systems in aerospace engineering.
+\end{itemize}
+}
+\vspace{.25cm}
+% 2011-2014 Research with Fidkowski
+\cventry{2013-2017}{Graduate Research Assistant}{Department of Aerospace Engineering}{University of Michigan}{Ann Arbor, MI}{\normalsize 
+\vspace{-.2 cm}
+\begin{itemize}
+\setlength\itemsep{.2cm}
+  \item Research assistant in Nonequilibrium Gas and Plasma Dynamics Laboratory directed by Prof. Iain Boyd.
+\end{itemize}
+}
+\vspace{.25cm}
+
+% 2007-2010 Solarbubbles
+\cventry{2013}{Research Associate}{USRA/NASA Ames}{Moffett Field, CA}{}{
+\vspace{-.2 cm}
+\begin{itemize} \normalsize 
+\setlength\itemsep{.2cm}
+  \item Investigated a high-fidelity material response code, \textit{PATO}, using data from ground testing (PICA Iso-Q samples in the Arc-Jet) and flight data (NASA's Stardust and Mars Science Laboratory missions).
+  \item Mentors: Nagi Mansour, Ioana Cozmuta, David Hash, and Ryan McDaniel.
+\end{itemize}
+}
+
+\vspace{.25cm}
+
+% 2010 SURE research with Bernal
+\cventry{2011-2012}{Research Assistant}{University of Nebraska}{Lincoln, NE}{}{
+\vspace{-.2 cm}
+\begin{itemize}
+\setlength\itemsep{.2cm} \normalsize 
+  \item Researched fluid diodes as an infant heart-valve replacement experimentally and computationally using ANSYS Fluent
+  \item Worked in collaboration with Prof. Kevin Cole and a pediatric heart surgeon at the University of Nebraska Medical Center
+  \item \textit{Honors Thesis}: \href{https://drive.google.com/file/d/0B0F1gCLtEzTKRVdUaW90N09tTUE/view?usp=sharing&resourcekey=0-dN-256z50YhZFAk5I8B04g}{Fluid Diodes for Treatment of Infant Heart-Valve Defects}
+\end{itemize}
+}
+
+\pagestyle{fancy}
+\rfoot{Page \thepage~of \pageref{LastPage}}
+\rhead{Hanquist CV}
+\lfoot{}
+
+
+\section{Ph.D. Thesis}
+%\cvitem{Title}{\emph{Finite Element Methods for Optimal Output Prediction}}
+\cvitem{Title}{\emph{Modeling of Electron Transpiration Cooling for Hypersonic Vehicles}}
+\cvitem{Advisor}{Iain D. Boyd}
+\cvitem{Committee}{Mark J. Kushner (cognate), Kenneth G. Powell, Philip L. Roe}
+\cvitem{Topic}{
+Using computational fluid and plasma dynamics to model thermionic emission from leading edges of hypersonic vehicles to investigate the effect of electron transpiration cooling.
+Thesis is available online at \url{https://hdl.handle.net/2027.42/138537}.
+}
+\cvitem{}{
+Requirements met for Ph.D.: May 21, 2017.
+}
+
+\newpage
+\section{Teaching and Mentoring Experience}
+\vspace{.25cm}
+\cventry{2019-Present}{Assistant Professor}{University of Arizona}{Tucson, AZ}{}{
+\begin{itemize} \normalsize 
+  \item Core instructor for Introduction to Fluid Mechanics (AME 331), which is a core undergraduate course for Mechanical Engineering and Biomedical Engineering students.
+  \item Core instructor for Numerical Methods in Fluid Mechanics and Heat Transfer (AME 431-531), which is a joint senior and graduate level course.
+  \item \textit{In Development}: Core instructor for Aerothermodynamics (AME 537), which is a graduate course aimed at providing fundamental knowledge into the phenomena of high-temperature, nonequilibrium, and rarefied flows. 
+\end{itemize}
+}
+\vspace{0.4cm}
+\cventry{2018-2019}{Lecturer}{University of Michigan}{Ann Arbor, MI}{}{
+\begin{itemize} \normalsize 
+  \item Taught Molecular Gas Dynamics (AEROSP 532) for two consecutive winter semesters within the Aerospace Engineering department. This is a core graduate course that focuses on gas properties at the molecular level using kinetic theory, quantum mechanics, statistical mechanics, and chemical processes.
+  %\item Course evaluations can be found at: \url{http://www.kylehanquist.com/career} 
+\end{itemize}
+} % end cventry
+%
+\vspace{0.4cm}
+\cventry{2017-2019}{Mentor}{Nonequilibrium Gas and Plasma Dynamics Laboratory}{Ann Arbor, MI}{}{
+\begin{itemize} \normalsize 
+  \item \textit{Effect of thermochemistry modeling on hypersonic flows}. Doctoral student: Michael Holloway (mhollo@umich.edu).
+  \item\textit{High temperature shock analysis of pure oxygen}. Masters student: Kevin Viveros (kovivero@umich.edu)
+  \item \textit{Shock tube analysis of pure oxygen using 2T and STS approaches}. Doctoral student: Pawel Sawicki (psawicki@umich.edu)
+    \item \textit{Utilizing CFD to model rocket plumes in space}. Undergraduate student: Kathryn Henry (kvhenry@umich.edu)
+       \item \textit{Master equation and shock tube analysis of vibrational relaxation times of oxygen}. Doctoral student: Michael Holloway (mhollo@umich.edu).
+     \item \textit{Plume modeling}. Doctoral student: Austin Brenner (aubr@umich.edu)
+  \item \textit{Assessment of open-source CFD software in accounting for real-gas effects}. Undergraduate student: Andry-Tohy Rakotovololona (rakoati@umich.edu )
+\end{itemize}
+} 
+
+\vspace{.4cm}
+
+\cventry{2015}{Graduate Student Instructor}{University of Michigan}{Ann Arbor, MI}{}{
+Aero 225: Introduction to Gas Dynamics (60 students)
+\vspace{.4cm}
+\begin{itemize} \normalsize 
+  \item Lectured when the core instructor was absent (14 lectures), held office hours and review sessions, and answered questions via email and the course website.
+\end{itemize}
+} % end cventry
+%
+\vspace{.4cm}
+\cventry{2014-2016}{Mentor}{Michigan Mentorship Program}{Ann Arbor, MI}{}{
+\begin{itemize} \normalsize 
+  \item Mentored area high school students interested in engineering and computer science. 
+\end{itemize}
+} % end cventry
+%
+\vspace{.4cm}%
+%\cventry{2014}{Grader}{University of Michigan}{Ann Arbor, MI}{}{
+%Aero 522: Viscous Flow
+%\vspace{.2cm}
+%\begin{itemize}
+%  \item Graded homework and proctored exams for a graduate class of 30 students
+%\end{itemize}
+%} % end cventry
+
+\cventry{2011}{Teaching Assistant}{University of Nebraska}{Lincoln, NE}{}{
+Mech 420: Heat Transfer
+\vspace{.2cm}
+\begin{itemize} \normalsize 
+  \item Graded homework for a senior/graduate class of 35 students.
+  \item Co-wrote course notes.
+\end{itemize}
+} % end cventry
+
+\vspace{.4cm}%
+
+\cventry{2010-2011}{Tutor}{University of Nebraska}{Lincoln, NE}{}{
+\begin{itemize} \normalsize 
+  \item Tutored students in the Student Support Services (students with academic need, low income, first generation, or a documented disability) in areas of math, science, and engineering
+\end{itemize}
+} % end cventry
+
+\section{Relevant Experience}
+\cventry{2010}{Intern}{United States Senate}{Washington, DC}{}{
+\begin{itemize} \normalsize 
+  \item Worked in the office of Nebraska Senator Benjamin Nelson (retired)
+  \item Answered phone calls and mail from constituents
+  \item Gave tours of U.S. Capitol building
+  \item Received guests to the Senator's office
+\end{itemize}
+}
+
+
+%\vspace{.07cm}
+\section{Activities, Affiliations, and Training}
+\cvitem{2021}{2020 AIAA Plasmadynamics and Lasers Best Paper Award (\href{https://doi.org/10.2514/6.2020-3230}{AIAA 2020-3230})
+}
+\vspace{0.3cm}
+\cvitem{2021}{ASEE Master Class on Effective Teaching
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Attended this class designed to provide university-level STEM instructors with a common framework, terminology, and practical exercises to develop their teaching on a soundly neuroscientific basis.
+\end{itemize}
+}
+\cvitem{2020-Present}{AIAA Thermophysics Technical Committee (Member)
+}
+\vspace{0.3cm}
+\cvitem{2020}{Frontiers in Physics – Plasma Physics,  2019 Editor’s Choice
+}
+\cvitem{2020}{NSF Engineering Directorate CAREER Proposal Workshop
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Attended this workshop designed to introduce junior faculty in submitting NSF CAREER proposals.
+\end{itemize}
+}
+\vspace{-0.1cm}
+\cvitem{2018}{NextProf - Michigan Engineering Workshop
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Attended this workshop designed to train participants for future academic success.
+\end{itemize}
+}
+\vspace{-0.1cm}
+\cvitem{2018}{Physics World
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Quoted in Physics World publication: \url{https://physicsworld.com/a/top-tips-from-tree-tops}
+\end{itemize}
+}
+\vspace{-0.1cm}
+\cvitem{2018}{Undergraduate Research Opportunity Program's Research Symposium (Judge)
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Judge posters and presentations presented by undergraduate researchers at the University of Michigan.
+\end{itemize}
+}
+\vspace{-0.1cm}
+\cvitem{2018}{NIH Proposal Workshop - University of Michigan
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Attended this workshop designed to train participants in proposals to funding agencies. 
+\end{itemize}
+}
+\vspace{-0.1cm}
+\cvitem{2017}{Engineering Graduate Symposium (Judge)
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Judge the University of Michigan's College of Engineering Engineering Graduate Symposium, which included poster presentations of doctoral and master's students research.
+\end{itemize}
+}
+\vspace{-0.1cm}
+\cvitem{2016}{Golf Channel's Driver vs. Driver (Finalist)
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Finalist on nationally televised design competition where contestants compete to design Wilson-Staff's next golf driver.
+  \item Presented televised lecture on how aerodynamics are important in golf. 
+\end{itemize}
+}
+\vspace{-0.1cm}
+\cvitem{2016-2017}{Aerospace Engineering Student Advisory Board (Member)
+\vspace{0.1cm}
+\begin{itemize} \normalsize 
+  \item Identified and planned activities for graduate students, as well as address areas of concern.
+  \item Organized department lecture and discussion on inclusion: \textit{Growing together as Colleagues and Friends: Engaging in Sensitive Subjects and Difficult Conversations}.
+\end{itemize}
+}
+\vspace{-0.1cm}
+\cvitem{2015}{NSF I-Corps (Principal Investigator)
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Received a \$10,000 grant to identify commercial and product opportunities that can emerge from PhD research.
+  \item Focuses were on modeling cardiovascular system and glass manufacturing process. 
+\end{itemize}
+}
+\vspace{-0.1cm}
+\cvitem{2011-2012}{Nebraska Pi Tau Sigma (President)
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Brought chapter into ``good standing''
+  \item Best chapter report (national award)
+  \item Organized first annual College of Engineering Blood Drive
+\end{itemize}
+}
+\vspace{-0.1cm}
+\cvitem{2011-2012}{Tau Beta Pi Nebraska Alpha
+\vspace{.1cm}
+\begin{itemize} \normalsize 
+  \item Most active member award.
+\end{itemize}
+}
+\vspace{-.1cm}
+\cvitem{2010-Present}{American Institute of Aeronautics and Astronautics (Senior Member)}
+\cvitem{2019-Present}{American Phyiscal Society (member)}
+\cvitem{2010-2012}{AIAA Design-Build-Fly competition (co-leader)}
+\cvitem{2010-2012}{Engineering Student Advisory Board (representative)}
+%\cvitem{2012-2017}{Intramural basketball, soccer, football, softball, dodgeball, hockey (captain)}
+%\cvitem{2010-2012}{University of Nebraska Cycling Club}
+
+
+\section{Service}
+\subsection{Journal Reviewing}
+\cvitem{}{Complete and updated list at \underline{\href{https://publons.com/researcher/1351511/kyle-hanquist/peer-review/}{Publons.com}.}}
+\cvitem{2017-Present}{Journal of Thermophysics and Heat Transfer (13)}
+\cvitem{2021}{AIAA Journal}
+\cvitem{2017-2019}{Nonlinear Dynamics (3)}
+\cvitem{2018-2019}{Energies (17)}
+\cvitem{2018}{Applied Sciences (4)}
+\cvitem{2019}{Acta Astronautica}
+\cvitem{2017-Present}{International Journal of Heat and Mass Transfer (5)}
+
+\subsection{Review Panels}
+\cvitem{2021}{Panel reviewer National Science Foundation Fluid Dynamics Program}
+
+
+\subsection{Committees}
+\cvitem{2021}{Department Head Search Committee, Member, University of Arizona}
+\cvitem{2021}{Local Organizing Committee, 74th Annual Meeting of the
+APS Division of Fluid Dynamics}
+\cvitem{2021}{Track Chair, 13th AIAA/ASME Thermophysics and Heat Transfer Conference}
+\cvitem{2020-Present}{Regular session chair for AIAA Thermophysics Conference}
+
+\section{People Advised}
+\subsection{Ph.D. Students}
+\cvitem{2020-Present}{Martin Liza. University of Arizona. Funding: GEM Fellowship, Raytheon Missile Systems \& Defense, University Consortium for Applied Hypersonics}
+\cvitem{2021-Present}{Sruthi Chengalrayan. University of Arizona. Funding: Raytheon Missile Systems \& Defense}
+\cvitem{2021-Present}{Nathaniel Weltzin. University of Arizona. Funding: Raytheon Missile Systems \& Defense}
+
+\subsection{Masters Students}
+\cvitem{2020-Present}{Luciano Mozzone. University of Arizona. Funding: Raytheon Missile Systems \& Defense}
+
+\subsection{Postdoctoral Fellows}
+\cvitem{2020-2021}{Umran Duzel. University of Arizona. Funding: University of Arizona}
+
+
+\newpage
+
+%\vspace{.02cm}
+\section{Publications and Presentations}
+\vspace{.1cm}
+% Journal papers 
+% note: unsrt option makes the order the same as in the file; otherwise they get ordered differently
+%\bibliographystylejourn{unsrt}
+%\bibliographyjourn{mypapers_journ}                   
+%\nocitejourn{*} 
+%\vspace{.3cm}
+%
+% Conference papers
+%\bibliographystyleconf{unsrt}
+%\bibliographyconf{mypapers_conf}                 
+%\nociteconf{*}
+%\vspace{.3cm}
+%
+% Presentations
+%\bibliographystyletalk{unsrt}
+%\bibliographytalk{mypapers_talk}                 
+%\nocitetalk{*}
+%\vspace{.3cm}
+%\vspace{.07cm}
+
+\begin{refsection}
+\nocite{*}
+%\newcounter{reports}
+%\renewbibmacro*{finentry}{\sttepcounter{reports}\finentry}
+%\bibliographystyle{unsrt}
+\printbibliography[type=article,keyword=own,title={Journal}]
+\end{refsection} 
+
+\nocite{*}
+\printbibliography[type=inproceedings,keyword=own,title={Conference}]
+
+%\section{Honors and Awards}
+%\cvitem{2014}{Panel chair for the University of Michigan's Beyond the Master program}
+%\cvitem{2008-2012}{University of Nebraska Chancellor's List (3x)}
+%\cvitem{2008-2012}{University of Nebraska Dean's List (8x)}
+%\cvitem{2011-2012}{Student advisor to Industrial Advisory Committee}
+%\cvitem{2011-2012}{Student advisor to ABET}
+%\cvitem{2008-2012}{Regents Scholarship; Susan Buffett Scholarship; R \& S Haase Scholarship; Dale Traudt Memorial Scholarship; Myrtle and Jim Clarke Scholarship; Conant Fund}
+
+
+\begin{comment}
+\section{Conference Papers and Talks}
+\cvitem{ICOSAHOM, Salt Lake City}{Boundary Discontinuous Petrov Galerkin method (2D linear and 1D nonlinear results).}
+\cvitem{EGS, University of Michigan}{Boundary Discontinuous Petrov Galerkin method (1D linear results).}
+\cvitem{High Order Workshop, Cologne}{High order test cases.}
+\cvitem{AIAA, Grapevine}{Fidkowski talk on unsteady mesh motion.}
+\cvitem{SIAM, Boston}{Unsteady 2D and 3D mesh motion.}
+\cvitem{High Order Workshop, Nashville}{High order test cases.}
+\cvitem{ICCFD, Big Island}{Unsteady 2D mesh motion.}
+\cvitem{AIAA, Honolulu}{Unsteady entropy adjoint.}
+\cvitem{AIAA, Chicago}{Flapping wing paper with Bernal.}
+
+\end{comment}
+
+\begin{comment}
+\section{Languages}
+\cvitemwithcomment{Language 1}{Skill level}{Comment}
+\cvitemwithcomment{Language 2}{Skill level}{Comment}
+\cvitemwithcomment{Language 3}{Skill level}{Comment}
+\end{comment}
+
+% \vspace{.068cm}
+%\section{Software Experience}
+%\cvitem{Programming languages}{C, C\raise .8ex \hbox{$_{++}$}, MATLAB, Fortran, \LaTeX}
+%\cvitem{Numerical modeling}{Pointwise, SolidWorks, LeMANS, MONACO, MOPAR, PATO,  Evolve, OpenFoam, Fluent, SU2, Tecplot, ParaView, LAURA, FUN3D}
+
+
+\begin{comment}
+\section{Interests}
+\cvitem{hobby 1}{Description}
+\cvitem{hobby 2}{Description}
+\cvitem{hobby 3}{Description}
+\end{comment}
+\vspace{-.2cm}
+
+%\section{Current Contract/Grant Activities}
+%\cvitem{N/A}{Currently under faculty start-up package.}
+
+
+\section{References}
+% References available upon request.
+\cventry{}{Iain Boyd}{H. T. Sears Memorial Professor - National Security Faculty Director}{(PhD advisor)}{}{
+\begin{itemize} \normalsize 
+  \item Ann and H.J. Smead Aerospace Engineering Sciences
+  \item University of Colorado - Boulder
+  \item 3775 Discovery Drive
+  \item Boulder, CO 80303
+  \item \emailsymbol iain.boyd@colorado.edu
+  \item \phonesymbol 303-735-2494
+\end{itemize}
+}
+\vspace{0.4cm}
+
+\cventry{}{Peiwen "Perry" Li}{Professor}{(department chair)}{}{
+\begin{itemize} \normalsize 
+  \item Department of Aerospace and Mechanical Engineering
+  \item University of Arizona
+  \item 1130 N. Mountain Ave.
+  \item Tucson, AZ 85721
+  \item \emailsymbol peiwen@arizona.edu
+  \item \phonesymbol 520-626-7789
+\end{itemize}
+}
+\vspace{0.4cm}
+
+\cventry{}{David Hahn}{Craig M. Berge Dean}{(college dean)}{}{
+\begin{itemize} \normalsize 
+  \item College of Engineering
+  \item University of Arizona
+  \item Civil Engineering 100
+  \item Tucson, AZ 85721
+  \item \emailsymbol dwhahn@arizona.edu
+  \item \phonesymbol 520-621-6595
+\end{itemize}
+}
+
+\vspace{0.4cm}
+
+
+\cventry{}{Kentaro Hara}{Assistant Professor}{(research collaborator)}{}{
+\begin{itemize} \normalsize 
+  \item Department of Aeronautics and Astronautics
+  \item Stanford University
+  \item 496 Lomita Mall
+  \item Stanford, CA 94301
+  \item \emailsymbol kenhara@stanford.edu
+  \item \phonesymbol 650-725-6309
+\end{itemize}
+}
+
+\vspace{0.4cm}
+
+\cventry{}{Dwight Viehland}{Jack E. Cowling Professor}{(research collaborator)}{}{
+\begin{itemize} \normalsize 
+  \item Department of Materials Science \& Engineering
+  \item Virginia Polytechnic Institute and State University 
+  \item 400 Stanger Street
+  \item Blacksburg, VA 24061
+  \item \emailsymbol dviehlan@vt.edu
+  \item \phonesymbol 540-231-2276
+\end{itemize}
+}
+
+\pagestyle{fancy}
+\rfoot{Page \thepage~of \pageref{LastPage}}
+\lfoot{Last updated \today.}
+\rhead{Hanquist CV}
+
+\end{document}
